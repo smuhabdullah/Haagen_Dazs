@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="view_pos_config_pos_session_stock">
+        <field name="name">pos.config.kanban.view.inherit</field>
+        <field name="model">pos.config</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_config_kanban"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='open_session_cb']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <field name="currency_id" position="after">
+              <field name="is_session_stock_close"/>
+            </field>
+            <xpath expr="//button[@name='open_session_cb']" position="after">
+                <button t-if="!record.current_session_id.raw_value &amp;&amp; !record.pos_session_username.value &amp;&amp; record.is_session_stock_close.raw_value" class="btn btn-primary" name="open_session_cb_stock" type="object">New Session</button>
+                <button t-if="!record.current_session_id.raw_value &amp;&amp; !record.pos_session_username.value &amp;&amp; !record.is_session_stock_close.raw_value" class="btn btn-primary" name="close_session_cb_stock" type="object">Close Stock</button>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,20 @@
+<odoo>
+    <data>
+        <record id="pos_config_pos_user_security" model="ir.rule">
+            <field name="name">POS Config POS User Security</field>
+            <field name="model_id" ref="point_of_sale.model_pos_config"/>
+            <field eval="False" name="global"/>
+            <field name="groups" eval="[(4, ref('point_of_sale.group_pos_user')),(4, ref('point_of_sale.group_pos_manager'))]"/>
+            <field name="domain_force">[('id','in', user.allowed_pos_config_ids.ids)]</field>
+        </record>
+
+        <record id="pos_config_pos_manager_security" model="ir.rule">
+            <field name="name">POS Config POS Administrator Security</field>
+            <field name="model_id" ref="point_of_sale.model_pos_config"/>
+            <field eval="False" name="global"/>
+            <field name="groups" eval="[Command.set([ref('base.group_system')])]"/>
+            <field name="domain_force">[(1,'=', 1)]</field>
+        </record>
+
+    </data>
+</odoo>

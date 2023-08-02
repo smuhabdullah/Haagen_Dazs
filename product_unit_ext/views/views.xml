@@ -1,0 +1,17 @@
+<odoo>
+  <data>
+
+    <record id="operating_unit_only_form_view" model="ir.ui.view">
+        <field name="name">operating.unit.form.inh</field>
+        <field name="model">operating.unit</field>
+        <field name="inherit_id" ref="operating_unit.view_operating_unit_form"/>
+        <field name="arch" type="xml">
+            <field name="company_id" position="after">
+                <field name="seq_no"/>
+                <field name="last_no" invisible="1"/>
+            </field>
+        </field>
+    </record>
+
+  </data>
+</odoo>

@@ -1,0 +1,37 @@
+<odoo>
+    <record id="cash_in_out_wizard_form" model="ir.ui.view">
+        <field name="name">cash.in.out.wizard</field>
+        <field name="model">cash.in.out.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Haagen Dazs Physical Cash/ bank in/out Report">
+                <group>
+                    <group>
+                        <field name="start_date"/>
+                        <field name="draft_entries"/>
+                    </group>
+                    <group>
+                        <field name="end_date"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="action_print_report" type="object"
+                            string="Print" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_cash_in_out" model="ir.actions.act_window">
+        <field name="name">Haagen Dazs Physical Cash/ bank in/out Report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cash.in.out.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="cash_in_out_wizard_form"/>
+        <field name="target">new</field>
+    </record>
+    <menuitem id="menu_cash_in_out_report" name="Cash in out Report"
+              parent="account.menu_finance_reports"
+              action="action_cash_in_out" sequence="3"/>
+
+</odoo>

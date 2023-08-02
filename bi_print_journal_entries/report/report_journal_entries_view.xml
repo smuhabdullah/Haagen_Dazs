@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+
+        <template id="journal_entry_template_report_view">
+            <t t-call="purchase_report_extend.custom_purchase_extend_template_id"/>
+            <t t-call="web.external_layout">
+                <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})"/>
+                <div class="page" style="margin-top:-35px;">
+                    <div>
+                        <h2 class="text-center mb32">
+                            <t t-if="o.payment_id">
+                                <t t-if="o.payment_id.payment_type == 'inbound'">
+                                    Payment Receipt
+                                </t>
+                                <t t-if="o.payment_id.payment_type == 'outbound'">
+                                    Payment Voucher
+                                </t>
+                            </t>
+                            <t t-else="">
+                                General Voucher
+                            </t>
+
+
+                        </h2>
+                    </div>
+                    <br/>
+
+                    <table style="width:100%;" class="table-borderless">
+                        <tbody>
+                            <tr>
+                                <td width="20%">
+                                    <strong>Voucher Number:</strong>
+                                </td>
+                                <td width="30%">
+                                    <span t-field="o.name"/>
+                                </td>
+                                <td width="20%">
+                                    <strong>Mode of Payment:</strong>
+                                </td>
+                                <td width="30%">
+                                    <span t-field="o.journal_id"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="20%">
+                                    <strong>Document Date :</strong>
+                                </td>
+                                <td width="30%">
+                                    <span t-field="o.date"/>
+                                </td>
+                                <td width="20%">
+                                    <strong>Reference :</strong>
+                                </td>
+                                <td width="30%">
+                                    <span t-field="o.ref"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="20%">
+                                    <strong>User ID:</strong>
+                                </td>
+                                <td width="30%">
+                                    <span t-field="o.user_id"/>
+                                </td>
+                                <td width="20%">
+                                    <strong>Due Date :</strong>
+                                </td>
+                                <td width="30%">
+                                    <span t-field="o.date"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="20%">
+                                    <t t-if="o.payment_id">
+                                        <strong>Payment Type :</strong>
+                                    </t>
+                                </td>
+                                <td width="30%">
+                                    <t t-if="o.payment_id">
+                                        <t t-if="o.payment_id.payment_type == 'inbound'">
+                                            <span>Receive Money</span>
+                                        </t>
+                                        <t t-if="o.payment_id.payment_type == 'outbound'">
+                                            <span>Send Money</span>
+                                        </t>
+                                    </t>
+                                </td>
+                                <td width="20%">
+                                    <t t-if="o.state == 'posted'">
+                                        <strong>Posting Date :</strong>
+                                    </t>
+                                </td>
+                                <td width="30%">
+                                    <t t-if="o.state == 'posted'">
+                                        <span t-field="o.posting_date" t-options='{"widget": "date"}'/>
+                                    </t>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <br/>
+
+                    <table style="width:100%;border:2px solid black;" class="table table-condensed">
+                        <thead>
+                            <tr>
+                                <!--                                <th>Partner</th>-->
+                                <th style="border:2px solid black;">Account Code</th>
+                                <th style="border:2px solid black;">Account Name</th>
+                                <th style="border:2px solid black;">Remarks</th>
+                                <!--                                <th>Due Date</th>-->
+                                <th style="border:2px solid black;">Branch</th>
+                                <th style="border:2px solid black;">Taxes(%)</th>
+                                <th style="border:2px solid black;">Debit</th>
+                                <th style="border:2px solid black;">Credit</th>
+                            </tr>
+                        </thead>
+                        <tbody class="consumed_tbody">
+                            <t t-set="total" t-value="0.0"/>
+                            <t t-set="total1" t-value="0.0"/>
+                            <t t-foreach="o.line_ids" t-as="line">
+                                <tr>
+                                    <!--                                    <td>-->
+                                    <!--                                        <span t-field="line.partner_id"/>-->
+                                    <!--                                    </td>-->
+                                    <td style="border:2px solid black;">
+                                        <span t-field="line.account_id.code"/>
+                                    </td>
+                                    <td style="border:2px solid black;">
+                                        <span t-field="line.account_id.name"/>
+                                    </td>
+                                    <td style="border:2px solid black;">
+                                        <span t-field="line.name"/>
+                                    </td>
+                                    <!--                                    <td>-->
+                                    <!--                                        <span t-field="line.date_maturity"/>-->
+                                    <!--                                    </td>-->
+                                    <td style="border:2px solid black;">
+                                        <span t-field="line.analytic_account_id"/>
+                                    </td>
+                                    <td style="border:2px solid black;">
+                                        <span t-field="line.tax_ids"/>
+                                    </td>
+                                    <td style="border:2px solid black;">
+                                        <span t-field="line.debit"/>
+                                    </td>
+                                    <td style="border:2px solid black;">
+                                        <span t-field="line.credit"/>
+                                    </td>
+                                </tr>
+                                <t t-set="total" t-value="total + line.debit"/>
+                                <t t-set="total1" t-value="total1 + line.credit"/>
+                            </t>
+                            <tr>
+                                <td></td>
+                                <!--                                <td></td>-->
+                                <!--                                <td></td>-->
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td style="border:2px solid black;">
+                                    <strong>Total:</strong>
+                                </td>
+                                <td style="border:2px solid black;" width="10%">
+                                    <strong>
+                                        <span t-esc="'{:,.2f}'.format(total)"/>
+                                        <span t-field="o.currency_id.symbol"/>
+                                    </strong>
+                                </td>
+                                <td style="border:2px solid black;" width="10%">
+                                    <strong>
+                                        <span t-esc="'{:,.2f}'.format(total1)"/>
+                                        <span t-field="o.currency_id.symbol"/>
+                                    </strong>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="row col-12" style="margin-top:100px;">
+                        <div class="col-3 text-center">
+                            <strong>
+                                <u>
+                                    <h6>Prepared By</h6>
+                                </u>
+                            </strong>
+                        </div>
+                        <div class="col-3 text-center">
+                            <strong>
+                                <u>
+                                    <h6>Checked By</h6>
+                                </u>
+                            </strong>
+                        </div>
+                        <div class="col-3 text-center">
+                            <strong>
+                                <u>
+                                    <h6>Approved By</h6>
+                                </u>
+                            </strong>
+                        </div>
+                        <div class="col-3 text-center">
+                            <strong>
+                                <u>
+                                    <h6>Approved By</h6>
+                                </u>
+                            </strong>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <template id="journal_entry_report_template_id">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="bi_print_journal_entries.journal_entry_template_report_view" t-lang="o.partner_id.lang"/>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

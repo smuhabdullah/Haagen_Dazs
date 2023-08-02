@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_pos_session_form_pos_session_stock" model="ir.ui.view">
+        <field name="name">pos.session.view.form.inherit</field>
+        <field name="model">pos.session</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_session_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="inside">
+                <notebook>
+                    <page name="opening_stock" string="Opening Stock">
+                        <field name="session_stock_ids" attrs="{'readonly': [('state','=','closed')]}">
+                            <tree editable="bottom">
+                                <field name="product_id" domain="[('show_in_pos_session','=',True)]"/>
+                                <field name="product_uom_id" />
+                                <field name="product_uom_category_id" invisible="1" />
+                                <field name="opening_stock" />
+                                <field name="closing_stock" />
+                                <field name="difference_stock" />
+                                <field name="cost" />
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="OpeningStockDetailsPopup" owl="1">
+        <div class="popup money-details invisible">
+            <main class="body">
+                <div class="money-details-title">
+                    Opening Stock
+                </div>
+                <div class="money-details-info">
+                    <span t-esc="fetchProductDetails()"/>
+                    <span t-esc="product_lines"/>
+                    <div t-foreach="fetchProductDetails()" t-as="product_line">
+                        <!-- <div class="money-details-value"> -->
+                           <span t-esc="product_line.product_name"/>
+                           ---<span t-esc="product_line.quantity"/> 
+                        <!-- </div> -->
+                    </div>
+                </div>
+                <!-- <div class="total-section">
+                    <span>Total </span>
+                    <CurrencyAmount currency="currency" amount="env.pos.format_currency_no_symbol(state.total)"/>
+                </div> -->
+            </main>
+            <footer class="footer">
+                <div class="button" t-on-click="discard()">Close</div>
+                <!-- <div class="button" t-on-click="confirm()">Confirm</div> -->
+            </footer>
+        </div>
+    </t>
+</templates>

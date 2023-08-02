@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="pos_payment_method_view_form_pos_payment_disc" model="ir.ui.view">
+        <field name="name">pos.payment.method.view.form.inherit</field>
+        <field name="model">pos.payment.method</field>
+        <field name="inherit_id" ref="point_of_sale.pos_payment_method_view_form"/>
+        <field name="arch" type="xml">
+            <field name="split_transactions" position="after">
+                <field name="apply_discount" />
+            </field>
+            <xpath expr="//group[@name='Payment methods']" position="inside">
+                <group attrs="{'invisible':[('apply_discount','=',False)]}">
+                    <field name="discount_journal_id" attrs="{'required':[('apply_discount','=',True)]}"/>
+                    <field name="receivable_disc_account_id" attrs="{'required':[('apply_discount','=',True)]}"/>
+                    <field name="expense_disc_account_id" attrs="{'required':[('apply_discount','=',True)]}"/>
+                    <field name="discount_product_id" attrs="{'required':[('apply_discount','=',True)]}"/>
+                </group>
+                <group attrs="{'invisible':[('apply_discount','=',False)]}">
+                    <field name="receivable_discount" />
+                    <field name="expense_discount" />
+                    <field name="total_discount" readonly="1" force_save="1"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

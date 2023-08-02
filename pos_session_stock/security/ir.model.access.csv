@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_pos_session_stock_line,pos_session_stock.pos_session_stock_line,model_pos_session_stock_line,base.group_user,1,1,1,1
+access_session_stock_wizard,pos_session_stock.session_stock_wizard,model_session_stock_wizard,base.group_user,1,1,1,1
+access_session_stock_wizard_line,pos_session_stock.session_stock_wizard_line,model_session_stock_wizard_line,base.group_user,1,1,1,1

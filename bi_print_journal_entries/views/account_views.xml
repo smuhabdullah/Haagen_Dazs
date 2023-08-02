@@ -1,0 +1,14 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="account_move_view_inherit">
+            <field name="name">account.move.view.inherit</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                 <field name="ref" position="after">
+                    <field name="posting_date" invisible="1"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>
